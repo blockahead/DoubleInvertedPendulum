@@ -82,11 +82,13 @@ D = [
 ];
 
 Q = diag( [ 1, 1, 1, 1, 1, 1 ] );
-R = diag( [ 1 ] );
+R = 1;
 gain = lqr( A ,B, Q, R )
 
 % return;
-sim( 'DoubleInvertedPendulum' );
+%%  シミュレーション
+dSamplingPeriod = 0.1;
+sim( 'DoubleInvertedPendulum_StateFeedback' );
 
 %% 描画
 
@@ -94,7 +96,10 @@ figure(1); hold on;
 x_pre = l1 * sin( Output(1,3) ) + l2 * sin( Output(1,3) + Output(1,4) );
 y_pre = l1 * cos( Output(1,3) ) + l2 * cos( Output(1,3) + Output(1,4) );
 
+AllTime = tic;
+
 for cnt = 1:length( Output )
+    tic;
     clf;
     x0 = Output(cnt,2);
     th1 = Output(cnt,3);
@@ -122,5 +127,6 @@ for cnt = 1:length( Output )
     axis equal;
 %     axis( [ -3, 3, -3, 3 ] );
     axis( [ -10, 10, -10, 10 ] );
-    pause( 0.1 );
+    pause( dSamplingPeriod - double( toc ) );
 end
+toc( AllTime );

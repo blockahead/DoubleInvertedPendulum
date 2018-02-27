@@ -1,3 +1,3 @@
-Simulink プロジェクト: DoubleInvertedPendulum
+Simulink project : DoubleInvertedPendulum
 
 None
